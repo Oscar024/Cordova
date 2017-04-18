@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,user-scalable=no">
+<title>HTML5 Geolocation</title>
+<link rel="stylesheet" media="all" href="css/styles.css" />
+</head>
+<body>
+
+	<header>
+		<h1>An Introduction to JavaScript</h1>
+		<p>HTML5 Geolocation</p>
+	</header>
+
+	<article>
+
+		<div id="geo"></div>
+
+	</article>
+
+<script>
+var geo = document.getElementById("geo");
+
+// do geolocation
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(geoSuccess, geoFailed);
+
+}
+else {
+	geo.textContent = "Sorry - your browser does not support geolocation.";
+	alert("Sorry not support")
+}
+
+// geolocation successful
+function geoSuccess(position) {
+	/*
+		latitude = position.coords.latitude
+		longitude = position.coords.longitude
+		accuracy (meter radius) = position.coords.accuracy
+	*/
+	var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	var mapOpts = {
+		zoom: 17,
+		center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+		mapTypeControl: false,
+		navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL },
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(geo, mapOpts);
+
+}
+
+// geolocation failed
+function geoFailed() {
+	geo.textContent = "Sorry - geolocation failed.";
+	alert("Sorry - geolocation failed");
+
+}
+</script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAA59xTIl32UIJuoruqDkFhMTMm8MVdO9Y"></script>
+</body>
+</html>
